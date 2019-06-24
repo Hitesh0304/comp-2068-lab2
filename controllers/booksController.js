@@ -72,7 +72,7 @@ exports.create = async (req, res) => {
 exports.update = (req, res) => {
   Book.updateOne({
     _id: req.body.id
-}, req.body.books, {
+}, req.body.book, {
     runValidators: true
 })  
 .then(() => {
