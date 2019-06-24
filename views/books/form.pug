@@ -1,0 +1,22 @@
+form(action=(book ? `/books/update` : "/books"), method="POST")
+  if book
+    input(type="hidden", name="id", value=book.id)
+
+  .form-group
+    label title
+    input.form-control(name="book[title]", required, value=(book ? book.title : null))
+
+  .form-group
+    label description
+    textarea.form-control(name="book[description]")
+      = book ? book.description : null
+
+  .form-group
+    label Status
+    select.form-control(name="book[status]", required)
+      each status in ['Unpublished', 'Published']
+        option(value=status, selected=(book && book.status === status))
+          = status.toLowerCase()       
+
+  .form-group
+    button.btn.btn-dark(type="submit") Submit

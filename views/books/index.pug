@@ -1,0 +1,30 @@
+extends ../layouts/main.pug
+block content
+  .container
+    header
+      h1= title
+
+    div
+      table.table.table-striped
+        thead
+          tr
+            th Title
+            th Description
+            th Status
+        
+        tbody
+          each book in books
+            tr
+              td
+                a(href=`/books/${book.id}`)= book.title
+              td
+                a(href=`/books/${book.id}`)= book.description
+              td
+                a(href=`/books/${book.id}`)= book.status
+              td
+                a(href=`/books/${book.id}/edit`) edit
+                = ` | `
+                form.destroy(action=`/books/destroy`, method="POST", onsubmit='return confirm("Are you sure you wish to destroy this book?")')
+                  input(type="hidden", name="id", value=`${book.id}`)
+                  input.destroy(type="submit", value="destroy")
+          

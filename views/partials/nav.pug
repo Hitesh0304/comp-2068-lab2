@@ -1,0 +1,19 @@
+nav.navbar.fixed-top.navbar-expand-lg.navbar-light.bg-light
+  a.navbar-brand(href='/') The Book
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+
+  #navbarSupportedContent.collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li.nav-item
+        a.nav-link(href='/') Home
+      li.nav-item
+        a.nav-link(href='/about') About
+
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') Books
+        .dropdown-menu
+          a.dropdown-item(href='/books') Books
+          a.dropdown-item(href='/books/new') New Book
+            
+    
