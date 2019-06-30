@@ -11,6 +11,8 @@ block content
             th Title
             th Description
             th Status
+            th Author
+            th Actions
         
         tbody
           each book in books
@@ -21,6 +23,7 @@ block content
                 a(href=`/books/${book.id}`)= book.description
               td
                 a(href=`/books/${book.id}`)= book.status
+              td= `${book.author.firstName} ${book.author.lastName}`
               td
                 a(href=`/books/${book.id}/edit`) edit
                 = ` | `

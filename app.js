@@ -25,14 +25,13 @@ app.use(cookieParser());
 app.use(session({
   secret: (process.env.secret || 'boorakacha'),
   cookie: {
-    maxAge: 10800000
+    max: 10800000
   },
   resave: true,
   saveUninitialized: true
 }));
 app.use(flash());
 app.use((req, res, next) => {
-  debugger
   res.locals.flash = res.locals.flash || {};
   res.locals.flash.success = req.flash('success') || null;
   res.locals.flash.error = req.flash('error') || null;
@@ -54,6 +53,23 @@ app.use(bodyParser.urlencoded({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use('/css', express.static('assets/stylesheets'));
+
+//Our Authentication helper
+const isAuthenticated = (req) => {
+  return req.session && req.session.userId;
+};
+
+app.use((req, res, next) => {
+  req.isAuthenticated = () => {
+    if (!isAuthenticated(req)) {
+      req.flash('error', `You are not permitted to do this action.`);
+      res.redirect('/');
+    }
+  }
+
+  res.locals.isAuthenticated = isAuthenticated(req);
+  next();
+});
 
 // Our routes
 const routes = require('./routes.js');

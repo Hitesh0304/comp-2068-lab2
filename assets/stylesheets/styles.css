@@ -38,3 +38,22 @@ body {
 .flash{
   margin-top: 60px;
 }
+
+.nav-destroy>input[type="submit"]{
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: rgba(0, 0, 0, 0.5);
+  display: block;
+  padding: .5 rem 0.5 rem;
+}
+
+@media (min-width: 992px) .nav-destroy>input[type="submit"]{
+  padding-right: .5rem;
+  padding-left: .5rem;
+}
+
+.nav-destroy:hover>input[type="submit"]{
+  color: rgba(0, 0, 0, 0.7);
+}

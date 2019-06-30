@@ -9,7 +9,7 @@ const BookSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
 
     status: {
@@ -17,8 +17,14 @@ const BookSchema = new mongoose.Schema({
         required: true,
         enum: ['Unpublished', 'Published'],
         default: 'Unpublished'
+    },
+    author:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Author',
+      required: true  
     }
-    
+},{
+    timestamps: true
 });
 
 // Exporting our book model

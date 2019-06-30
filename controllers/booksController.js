@@ -1,8 +1,12 @@
 const Book= require('../models/book');
-const mongoose = require('mongoose');
 
 exports.index = (req, res) => {
-    Book.find()
+  req.isAuthenticated();
+
+    Book.find({
+      author: req.session.userId
+    })
+    .populate('author')
       .then(book => {
         res.render('books/index', {
           books: book,
@@ -17,7 +21,12 @@ exports.index = (req, res) => {
 
 
 exports.show = (req, res) => {
-  Book.findById(req.params.id)
+  req.isAuthenticated();
+
+  Book.findOne({
+    _id: req.params.id,
+    author: req.session.userId
+  })
     .then(book => {
         res.render('books/show',{
             title: book.title,
@@ -32,6 +41,8 @@ exports.show = (req, res) => {
 
 
 exports.new = (req, res) => {
+  req.isAuthenticated();
+
     res.render('books/new',{
         title: 'New Book'
     });
@@ -39,7 +50,12 @@ exports.new = (req, res) => {
 
 
 exports.edit = (req, res) => {
-    Book.findById(req.params.id)
+  req.isAuthenticated();
+
+  Book.findOne({
+    _id: req.params.id,
+    author: req.session.userId
+  })
       .then(book => {
           res.render('books/edit',{
               title: `Edit ${book.title}`,
@@ -54,6 +70,8 @@ exports.edit = (req, res) => {
 
 
 exports.create = async (req, res) => {
+  req.isAuthenticated();
+  req.body.book.author = req.session.userId;
     Book.create(req.body.book)
     .then(() => {
       req.flash('success', 'Your new book was created successfully.');
@@ -70,11 +88,14 @@ exports.create = async (req, res) => {
 
 
 exports.update = (req, res) => {
+  req.isAuthenticated();
+
   Book.updateOne({
-    _id: req.body.id
-}, req.body.book, {
+    _id: req.body.id,
+    author: req.session.userId
+  }, req.body.book, {
     runValidators: true
-})  
+  })
 .then(() => {
     req.flash('success', 'Your new book was updated successfully.');
     res.redirect('/books');
@@ -90,9 +111,12 @@ exports.update = (req, res) => {
 
 
 exports.destroy = (req, res) => {
+  req.isAuthenticated();
+
   Book.deleteOne({
-    _id: req.body.id
-})
+    _id: req.body.id,
+    author: req.session.userId
+  })
 .then(() => {
     req.flash('success', 'Your book was deleted successfully.');
     res.redirect("/books")
